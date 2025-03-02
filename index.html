@@ -3,10 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Page</title>
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #timer {
+            font-size: 2rem;
+            font-weight: bold;
+            color: red;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to My GitHub Page!</h1>
-    <p>This is a test page.</p>
+    <h1>Offer Expires In:</h1>
+    <div id="timer"></div>
+
+    <script>
+        function setCountdown() {
+            let now = new Date();
+            let tomorrow = new Date();
+            tomorrow.setDate(now.getDate() + 1);
+            tomorrow.setHours(23, 59, 59, 999); // End of the next day
+
+            function updateTimer() {
+                let now = new Date().getTime();
+                let distance = tomorrow - now;
+
+                let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("timer").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+
+                if (distance < 0) {
+                    clearInterval(countdown);
+                    document.getElementById("timer").innerHTML = "Expired";
+                }
+            }
+            updateTimer();
+            let countdown = setInterval(updateTimer, 1000);
+        }
+
+        setCountdown();
+    </script>
 </body>
 </html>
